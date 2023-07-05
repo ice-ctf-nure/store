@@ -1,0 +1,14 @@
+host: 127.0.0.1:50051
+auth-key: development-auth-key
+signin-key: development-signin-key
+db:
+  host: postgres-db 
+  user: postgres
+  pass: postgres
+  db_name: dummydb
+  db_port: 5432
+tls:
+  enabled: true
+  certfile: "/certs/ex_srv.crt"
+  certkey: "/certs/ex_srv.key"
+  cafile: "/certs/root_ca.crt"	
