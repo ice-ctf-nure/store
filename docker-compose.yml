@@ -1,0 +1,37 @@
+version: '3'
+services:
+  server:
+    container_name: haaukins-store-server
+    env_file:
+      - .env
+    image: aaunetworksecurity/haaukins-store:sha-84e56d4
+    ports:
+      - 50051:50051
+    restart: always
+    depends_on:
+      - postgres-db
+    volumes:
+      - ${CERTS_PATH}:/certs:ro  # in production, change this CERTS_PATH to your certificate files folder
+      - ${CONFIG_PATH}:/config.yml:ro  # mount config file
+    networks:
+      - internal
+      
+  postgres-db:
+    image: postgres:alpine
+    container_name: haaukins-store-db
+    env_file:
+      - .env
+    restart: always
+    volumes:
+       - ${DB_LOGS_PATH}:/logs
+       - ${PSQL_CONFIG_PATH}:/etc/postgresql/postgresql.conf
+       - ${PSQL_DATA_PATH}:/var/lib/postgresql/data
+    networks:
+      - internal
+
+
+# Networks to be created to facilitate communication between containers
+networks:
+  internal:
+    driver: bridge
+  
